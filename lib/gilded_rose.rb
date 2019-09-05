@@ -46,7 +46,9 @@ end
 
 # Item has a name, a quality and a sell_in
 class Item
-  attr_accessor :name, :sell_in
+  attr_accessor :sell_in
+  attr_reader :name
+
 
   # @return [Integer] quality value
   def quality
@@ -80,13 +82,17 @@ class Item
   # @param quality [Integer] item quality
   def self.for(name:, sell_in:, quality:)
     case name
-    when 'Aged Brie' then AgedBrie.new(name, sell_in, quality)
+    when 'Aged Brie' then AgedBrie.send(:new, name, sell_in, quality)
     when 'Backstage passes to a TAFKAL80ETC concert'
-      Backstage.new(name, sell_in, quality)
-    when 'Sulfuras, Hand of Ragnaros' then Sulfuras.new(name, sell_in, quality)
-    else new(name, sell_in, quaility)
+      Backstage.send(:new, name, sell_in, quality)
+    when 'Sulfuras, Hand of Ragnaros'
+      Sulfuras.send(:new, name, sell_in, quality)
+    else new(name, sell_in, quality)
     end
   end
+
+  # Disable .new, use the factory!
+  private_class_method :new
 
   # Item with name being Aged Brie
   class AgedBrie < Item

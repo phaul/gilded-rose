@@ -6,7 +6,7 @@ require 'gilded_rose'
 # end
 
 RSpec.describe Item do
-  let(:item) { described_class.new('An item', 10, 20) }
+  let(:item) { described_class.for(name: 'An item', quality: 10, sell_in: 20) }
 
   it 'is an Item' do
     expect(item).to be_an described_class
@@ -14,7 +14,7 @@ RSpec.describe Item do
 
   describe 'Item#to_s' do
     it 'contains the 3 attributes' do
-      expect(item.to_s).to eq 'An item, 10, 20'
+      expect(item.to_s).to eq 'An item, 20, 10'
     end
   end
 
