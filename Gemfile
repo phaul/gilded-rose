@@ -8,3 +8,5 @@ group :test do
   gem 'deep-cover'
   gem 'rspec'
 end
+
+gemspec

@@ -1,2 +1,4 @@
 vendor/
 .bundle/
+deep_cover/
+coverage/
