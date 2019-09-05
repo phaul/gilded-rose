@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'gilded_rose'
 
-RSpec.describe GildedRose do
-  it 'tests something'
-end
+# RSpec.describe GildedRose do
+#   it 'tests something'
+# end
 
 RSpec.describe Item do
   let(:item) { described_class.new('An item', 10, 20) }
@@ -25,7 +25,8 @@ RSpec.describe Item do
 
     context 'when name is Aged Brie' do
       let(:item) do
-        super().tap { |i| i.name = 'Aged Brie' }
+        i = super()
+        Item.for(name: 'Aged Brie', quality: i.quality, sell_in: i.sell_in)
       end
 
       it 'can receive update without exceptions' do
@@ -63,7 +64,8 @@ RSpec.describe Item do
 
     context 'when name is Aged Brie' do
       let(:item) do
-        super().tap { |i| i.name = 'Aged Brie'}
+        i = super()
+        Item.for(name: 'Aged Brie', quality: i.quality, sell_in: i.sell_in)
       end
 
       it 'increases the quality by 1' do
@@ -138,7 +140,8 @@ RSpec.describe Item do
 
       context 'and name is Aged Brie' do
         let(:item) do
-          super().tap { |i| i.name = 'Aged Brie' }
+          i = super()
+          Item.for(name: 'Aged Brie', quality: i.quality, sell_in: i.sell_in)
         end
 
         it 'decreases the quality by 2' do

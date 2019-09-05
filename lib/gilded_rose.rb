@@ -24,6 +24,22 @@ class Item
     "#{@name}, #{@sell_in}, #{@quality}"
   end
 
+  def self.for(name: , sell_in: , quality: )
+    if name == 'Aged Brie' then
+      AgedBrie.new(name, sell_in, quality)
+    else
+      new(name, sell_in, quaility)
+    end
+  end
+
+  class AgedBrie < Item
+    def update
+      @quality += 1 if @quality < 50
+      @sell_in -= 1
+      @quality += 1 if @quality < 50 && @sell_in < 0
+    end
+  end
+
   def update
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
