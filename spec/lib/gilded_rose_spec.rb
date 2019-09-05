@@ -85,7 +85,8 @@ RSpec.describe Item do
 
     context 'when name is Backstage passes to a TAFKAL80ETC concert' do
       let(:item) do
-        super().tap { |i| i.name = 'Backstage passes to a TAFKAL80ETC concert'}
+        i = super()
+        Item.for(name: 'Backstage passes to a TAFKAL80ETC concert', quality: i.quality, sell_in: i.sell_in)
       end
 
       context 'and quality is < 50 and sell_in is < 11' do
@@ -161,7 +162,8 @@ RSpec.describe Item do
 
       context 'and name is Backstage passes to a TAFKAL80ETC concert' do
         let(:item) do
-          super().tap { |i| i.name = 'Backstage passes to a TAFKAL80ETC concert' }
+          i = super()
+          Item.for(name: 'Backstage passes to a TAFKAL80ETC concert', quality: i.quality, sell_in: i.sell_in)
         end
 
         it 'resets quality' do

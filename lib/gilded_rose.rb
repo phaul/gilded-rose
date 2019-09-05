@@ -27,6 +27,8 @@ class Item
   def self.for(name: , sell_in: , quality: )
     if name == 'Aged Brie' then
       AgedBrie.new(name, sell_in, quality)
+    elsif name == 'Backstage passes to a TAFKAL80ETC concert'
+      Backstage.new(name, sell_in, quality)
     else
       new(name, sell_in, quaility)
     end
@@ -37,6 +39,16 @@ class Item
       @quality += 1 if @quality < 50
       @sell_in -= 1
       @quality += 1 if @quality < 50 && @sell_in < 0
+    end
+  end
+
+  class Backstage < Item
+    def update
+      @quality += 1 if @quality < 50
+      @quality += 1 if @quality < 50 && @sell_in < 11
+      @quality += 1 if @quality < 50 && @sell_in < 6
+      @sell_in = @sell_in - 1
+      @quality = 0 if @sell_in < 0
     end
   end
 
