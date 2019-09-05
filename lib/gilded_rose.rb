@@ -1,3 +1,5 @@
+require 'forwardable'
+
 class GildedRose
 
   def initialize(items)
@@ -11,13 +13,46 @@ class GildedRose
   end
 end
 
+class Quality
+  extend Forwardable
+  include Comparable
+
+  def initialize(quality)
+    @quality = quality
+  end
+
+  def_delegator :@quality, :to_i
+  def_delegator :@quality, :to_s
+  def_delegator :@quality, :<=>
+
+  def increase
+    @quality += 1 if @quality < 50
+  end
+
+  def decrease
+    @quality -= 1 if @quality > 0
+  end
+
+  def reset
+    @quality = 0
+  end
+end
+
 class Item
-  attr_accessor :name, :sell_in, :quality
+  attr_accessor :name, :sell_in
+
+  def quality
+    @quality.to_i
+  end
+
+  def quality=(i)
+    @quality = Quality.new(i)
+  end
 
   def initialize(name, sell_in, quality)
     @name = name
     @sell_in = sell_in
-    @quality = quality
+    @quality = Quality.new(quality)
   end
 
   def to_s()
@@ -38,19 +73,19 @@ class Item
 
   class AgedBrie < Item
     def update
-      @quality += 1 if @quality < 50
+      @quality.increase
       @sell_in -= 1
-      @quality += 1 if @quality < 50 && @sell_in < 0
+      @quality.increase if sell_in < 0
     end
   end
 
   class Backstage < Item
     def update
-      @quality += 1 if @quality < 50
-      @quality += 1 if @quality < 50 && @sell_in < 11
-      @quality += 1 if @quality < 50 && @sell_in < 6
+      @quality.increase
+      @quality.increase if @sell_in < 11
+      @quality.increase if @sell_in < 6
       @sell_in = @sell_in - 1
-      @quality = 0 if @sell_in < 0
+      @quality.reset if @sell_in < 0
     end
   end
 
@@ -60,8 +95,8 @@ class Item
   end
 
   def update
-    @quality -= 1 if @quality > 0
+    @quality.decrease
     @sell_in -= 1
-    @quality -= 1 if @quality > 0 && @sell_in < 0
+    @quality.decrease if @sell_in < 0
   end
 end
