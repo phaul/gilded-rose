@@ -110,8 +110,8 @@ class Item
       @quality.increase
       @quality.increase if @sell_in < 11
       @quality.increase if @sell_in < 6
-      @sell_in = @sell_in - 1
-      @quality.reset if @sell_in < 0
+      @sell_in -= 1
+      @quality.reset if @sell_in.negative?
     end
   end
 
