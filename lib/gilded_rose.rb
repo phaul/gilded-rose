@@ -29,6 +29,8 @@ class Item
       AgedBrie.new(name, sell_in, quality)
     elsif name == 'Backstage passes to a TAFKAL80ETC concert'
       Backstage.new(name, sell_in, quality)
+    elsif name == 'Sulfuras, Hand of Ragnaros'
+      Sulfuras.new(name, sell_in, quality)
     else
       new(name, sell_in, quaility)
     end
@@ -49,6 +51,11 @@ class Item
       @quality += 1 if @quality < 50 && @sell_in < 6
       @sell_in = @sell_in - 1
       @quality = 0 if @sell_in < 0
+    end
+  end
+
+  class Sulfuras < Item
+    def update
     end
   end
 

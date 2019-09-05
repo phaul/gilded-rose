@@ -46,7 +46,8 @@ RSpec.describe Item do
 
     context 'when name is Sulfuras, Hand of Ragnaros' do
       let(:item) do
-        super().tap { |i| i.name = "Sulfuras, Hand of Ragnaros" }
+        i = super()
+        Item.for(name: 'Sulfuras, Hand of Ragnaros', quality: i.quality, sell_in: i.sell_in)
       end
 
       it 'can receive update without exceptions' do
@@ -183,7 +184,8 @@ RSpec.describe Item do
 
       context 'and name is Sulfuras, Hand of Ragnaros' do
         let(:item) do
-          super().tap { |i| i.name = 'Sulfuras, Hand of Ragnaros' }
+          i = super()
+          Item.for(name: 'Sulfuras, Hand of Ragnaros', quality: i.quality, sell_in: i.sell_in)
         end
 
         it 'doesn\'t change quality' do
