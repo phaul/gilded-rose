@@ -49,7 +49,6 @@ class Item
   attr_accessor :sell_in
   attr_reader :name
 
-
   # @return [Integer] quality value
   def quality
     @quality.to_i
@@ -86,8 +85,8 @@ class Item
     when 'Backstage passes to a TAFKAL80ETC concert'
       Backstage.send(:new, name, sell_in, quality)
     when 'Sulfuras, Hand of Ragnaros'
-      Sulfuras.send(:new, name, sell_in, quality)
-    else new(name, sell_in, quality)
+      new(name, sell_in, quality)
+    else Other.send(:new, name, sell_in, quality)
     end
   end
 
@@ -117,15 +116,15 @@ class Item
   end
 
   # Item with name being Sulfuras, Hand of Ragnaros
-  class Sulfuras < Item
+  class Other < Item
     # @see {Item.update}
-    def update; end
+    def update
+      @quality.decrease
+      @sell_in -= 1
+      @quality.decrease if @sell_in.negative?
+    end
   end
 
   # Updates item quality and sell_in according to Gilded Rose rules
-  def update
-    @quality.decrease
-    @sell_in -= 1
-    @quality.decrease if @sell_in.negative?
-  end
+  def update; end
 end
