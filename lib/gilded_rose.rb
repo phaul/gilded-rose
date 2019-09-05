@@ -60,48 +60,8 @@ class Item
   end
 
   def update
-    if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
-      if @quality > 0
-        if @name != "Sulfuras, Hand of Ragnaros"
-          @quality = @quality - 1
-        end
-      end
-    else
-      if @quality < 50
-        @quality = @quality + 1
-        if @name == "Backstage passes to a TAFKAL80ETC concert"
-          if @sell_in < 11
-            if @quality < 50
-              @quality = @quality + 1
-            end
-          end
-          if @sell_in < 6
-            if @quality < 50
-              @quality = @quality + 1
-            end
-          end
-        end
-      end
-    end
-    if @name != "Sulfuras, Hand of Ragnaros"
-      @sell_in = @sell_in - 1
-    end
-    if @sell_in < 0
-      if @name != "Aged Brie"
-        if @name != "Backstage passes to a TAFKAL80ETC concert"
-          if @quality > 0
-            if @name != "Sulfuras, Hand of Ragnaros"
-              @quality = @quality - 1
-            end
-          end
-        else
-          @quality = @quality - @quality
-        end
-      else
-        if @quality < 50
-          @quality = @quality + 1
-        end
-      end
-    end
+    @quality -= 1 if @quality > 0
+    @sell_in -= 1
+    @quality -= 1 if @quality > 0 && @sell_in < 0
   end
 end
