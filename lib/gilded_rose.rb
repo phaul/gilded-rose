@@ -131,7 +131,7 @@ class Item
     end
   end
 
-  # Item with name being Sulfuras, Hand of Ragnaros
+  # Item with any other name
   class Other < Item
     # @see {Item.update}
     def update
