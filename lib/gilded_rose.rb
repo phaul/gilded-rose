@@ -16,7 +16,6 @@ end
 # Quality changes values according to strict rules.
 class Quality
   extend Forwardable
-  include Comparable
 
   # New quality
   # @param quality [Integer] The non-wrapped quality value
@@ -26,7 +25,6 @@ class Quality
 
   def_delegator :@quality, :to_i
   def_delegator :@quality, :to_s
-  def_delegator :@quality, :<=>
 
   # Increases the quality by one
   def increase
@@ -76,10 +74,28 @@ class Item
   end
 
   # Item factory. Produces an item with the appropriate type
+  # @param object_like [Item|Nil] Create an object just like this except the
+  #                               other attributes
+  # @param name [String|Nil] Item name
+  # @param sell_in [Integer|Nil] sell in quantities
+  # @param quality [Integer|Nil] item quality
+  def self.for(object_like: nil, name: nil, sell_in: nil, quality: nil)
+    correctly_specified = ! object_like.nil? ||
+                          ! (name.nil? || sell_in.nil? || quality.nil?)
+    raise ArgumentError unless correctly_specified
+
+    name ||= object_like.name
+    sell_in ||= object_like.sell_in
+    quality ||= object_like.quality
+
+    for_attributes(name: name, sell_in: sell_in, quality: quality)
+  end
+
+  # Item factory. Produces an item with the appropriate type
   # @param name [String] Item name
   # @param sell_in [Integer] sell in quantities
   # @param quality [Integer] item quality
-  def self.for(name:, sell_in:, quality:)
+  def self.for_attributes(name:, sell_in:, quality:)
     case name
     when 'Aged Brie' then AgedBrie.send(:new, name, sell_in, quality)
     when 'Backstage passes to a TAFKAL80ETC concert'

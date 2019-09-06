@@ -4,9 +4,10 @@
 ## Uncomment and set this to only include directories you want to watch
 # directories %w(app lib config test spec features) \
 #  .select{|d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist")}
-directories %w(lib)
+directories %w(lib spec)
 guard :rspec, cmd: 'bundle exec rspec' do
   watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch(%r{^spec/.+\.rb$})
 end
 
 ## Note: if you are using the `directories` clause above and you are not

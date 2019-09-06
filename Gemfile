@@ -12,6 +12,7 @@ end
 group :test do
   gem 'deep-cover'
   gem 'rspec'
+  gem 'factory_bot'
 end
 
 gemspec

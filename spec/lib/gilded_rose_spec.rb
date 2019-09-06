@@ -6,7 +6,7 @@ require 'gilded_rose'
 # end
 
 RSpec.describe Item do
-  let(:item) { described_class.for(name: 'An item', quality: 10, sell_in: 20) }
+  let(:item) { build :item }
 
   it 'is an Item' do
     expect(item).to be_an described_class
@@ -25,8 +25,7 @@ RSpec.describe Item do
 
     context 'when name is Aged Brie' do
       let(:item) do
-        i = super()
-        Item.for(name: 'Aged Brie', quality: i.quality, sell_in: i.sell_in)
+        build :item, name: 'Aged Brie'
       end
 
       it 'can receive update without exceptions' do
@@ -36,7 +35,7 @@ RSpec.describe Item do
 
     context 'when quality isn\'t positive' do
       let(:item) do
-        super().tap { |i| i.quality = -10 }
+        build :item, quality: -10
       end
 
       it 'can receive update without exceptions' do
@@ -46,8 +45,7 @@ RSpec.describe Item do
 
     context 'when name is Sulfuras, Hand of Ragnaros' do
       let(:item) do
-        i = super()
-        Item.for(name: 'Sulfuras, Hand of Ragnaros', quality: i.quality, sell_in: i.sell_in)
+        build :item, name: 'Sulfuras, Hand of Ragnaros'
       end
 
       it 'can receive update without exceptions' do
@@ -65,8 +63,7 @@ RSpec.describe Item do
 
     context 'when name is Aged Brie' do
       let(:item) do
-        i = super()
-        Item.for(name: 'Aged Brie', quality: i.quality, sell_in: i.sell_in)
+        build :item, name: 'Aged Brie'
       end
 
       it 'increases the quality by 1' do
@@ -86,8 +83,7 @@ RSpec.describe Item do
 
     context 'when name is Backstage passes to a TAFKAL80ETC concert' do
       let(:item) do
-        i = super()
-        Item.for(name: 'Backstage passes to a TAFKAL80ETC concert', quality: i.quality, sell_in: i.sell_in)
+        build :item, name: 'Backstage passes to a TAFKAL80ETC concert'
       end
 
       context 'and quality is < 50 and sell_in is < 11' do
@@ -142,8 +138,7 @@ RSpec.describe Item do
 
       context 'and name is Aged Brie' do
         let(:item) do
-          i = super()
-          Item.for(name: 'Aged Brie', quality: i.quality, sell_in: i.sell_in)
+          Item.for object_like: super(), name: 'Aged Brie'
         end
 
         it 'decreases the quality by 2' do
@@ -163,8 +158,8 @@ RSpec.describe Item do
 
       context 'and name is Backstage passes to a TAFKAL80ETC concert' do
         let(:item) do
-          i = super()
-          Item.for(name: 'Backstage passes to a TAFKAL80ETC concert', quality: i.quality, sell_in: i.sell_in)
+          Item.for(object_like: super(),
+                   name: 'Backstage passes to a TAFKAL80ETC concert')
         end
 
         it 'resets quality' do
@@ -184,8 +179,7 @@ RSpec.describe Item do
 
       context 'and name is Sulfuras, Hand of Ragnaros' do
         let(:item) do
-          i = super()
-          Item.for(name: 'Sulfuras, Hand of Ragnaros', quality: i.quality, sell_in: i.sell_in)
+          Item.for object_like: super(), name: 'Sulfuras, Hand of Ragnaros'
         end
 
         it 'doesn\'t change quality' do
